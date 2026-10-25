@@ -1,0 +1,20 @@
+name: scoreboard
+
+services:
+    scoreboard:
+        build:
+            context: .
+            dockerfile: Containerfile
+            args:
+                VERSION: '${VERSION:-v2027.1}'
+                SHA256SUM: '${SHA256SUM:-d94620344fd9693abecb069616cd473d1ed5895952ee92c645bda6b0fc369ec6}'
+        image: 'scoreboard'
+        ports:
+            - '8000:8000'
+        volumes:
+            - type: bind
+              source: ./data/config/autosave
+              target: /scoreboard/config/autosave
+            - type: bind
+              source: ./data/logs
+              target: /scoreboard/logs

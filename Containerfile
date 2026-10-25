@@ -47,7 +47,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /
-COPY --from=build /build/scoreboard /scoreboard
+RUN groupadd --gid 1000 nso && \
+    useradd --uid 1000 --gid nso --create-home nso
 
+WORKDIR /scoreboard
+
+COPY --chown=nso:nso --from=build /build/scoreboard /scoreboard
+
+USER nso
 ENTRYPOINT ["/scoreboard/scoreboard.sh", "--nogui"]

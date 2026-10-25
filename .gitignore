@@ -1,0 +1,6 @@
+# Ignore CRG los
+data/logs/*.log
+
+# Ignore game data
+data/config/autosave/
+
